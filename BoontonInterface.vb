@@ -16,6 +16,8 @@ Public Class BoontonInterface
 
     Public Sub New(ByVal GPIBAddress As Integer, ByVal PrimaryAddress As Integer)
         thisBoonton = New Device(GPIBAddress, PrimaryAddress)
+
+        Write("RE99", True)
     End Sub
 
     Public Sub New(ByVal GPIBAddress As Integer, ByVal PrimaryAddress As Integer, ByVal SecondaryAddress As Integer)
@@ -140,7 +142,7 @@ Public Class BoontonInterface
     End Function
 
     Public Function SetSourceDB(ByVal OutputVolts As Double) As Boolean
-        Dim Result As Integer = Write("SL" & Str(OutputVolts) & "DB", True) 'source level to variable volts
+        Return Write("SL" & Str(OutputVolts) & "DB", True) 'source level to variable volts
     End Function
 
     Public Function SetSourceVolts(ByVal OutputVolts As Double) As Boolean
@@ -189,7 +191,7 @@ Public Class BoontonInterface
     End Function
 
     Public Function MeasureVRMS() As Double
-        If (Not Write("ALDB", False)) Then
+        If (Not Write("TVALVODB", False)) Then
             Return Double.NaN
         End If
 
@@ -212,7 +214,7 @@ Public Class BoontonInterface
 
     'Brent added DB to set distortion as DB
     Public Function MeasureTHDN() As Double
-        If (Not Write("DNDB", False)) Then
+        If (Not Write("TVDNPCDB", False)) Then
             Return Double.NaN
         End If
 
@@ -233,7 +235,7 @@ Public Class BoontonInterface
     End Function
 
     Public Function SetZero() As Boolean
-        Return Write("SL 0 VO", True) ' source level zero volts
+        Write("RE99FA", True) ' source level zero volts
     End Function
 
     Public Function MeasureSN() As Double

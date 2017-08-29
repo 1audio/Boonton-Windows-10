@@ -551,6 +551,10 @@ Public Class Form1
             FreqDistResponseTest()
         End If
 
+
+        ' Take the device offline and make sure there's no output
+        BoontonController.Close()
+
         If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag) Then
             SaveRawData()
             SaveChartImage()
@@ -563,8 +567,6 @@ Public Class Form1
         GC.Collect()
         GC.WaitForPendingFinalizers()
 
-        ' Take the device offline and make sure there's no output
-        BoontonController.Close()
 
         'Enable user inputs.
         RunButton.Enabled = True
