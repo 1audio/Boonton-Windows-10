@@ -35,7 +35,7 @@ Public Class Form1
     'Dim CalLab(27) As Double
     'Dim CalTHD(27) As Double
     'Dim Freq(27) As Double
-    Friend WithEvents txtStartLevelDB As System.Windows.Forms.TextBox
+    Friend WithEvents txtStartLevelV As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents txtLevelOhmLoad As System.Windows.Forms.TextBox
@@ -60,10 +60,19 @@ Public Class Form1
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents txtLevelDistortionThreshDB As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents txtFreqSource As System.Windows.Forms.TextBox
+    Friend WithEvents txtFreqSourceV As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents txtSNRReferenceDB As System.Windows.Forms.TextBox
+    Friend WithEvents txtSNRReferenceV As System.Windows.Forms.TextBox
     Friend WithEvents lbLevelThresh As System.Windows.Forms.Label
+    Friend WithEvents txtStartLevelDB As TextBox
+    Friend WithEvents txtSNRReferenceDB As TextBox
+    Friend WithEvents txtFreqSourceDB As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents Label15 As Label
     'the string returned from instrument
     Dim ResByte As Integer
 #Region " Windows Form Designer generated code "
@@ -97,14 +106,14 @@ Public Class Form1
     'Do not modify it using the code editor.
     Friend WithEvents RunButton As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title1 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea13 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim ChartArea14 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title7 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.RunButton = New System.Windows.Forms.Button()
-        Me.txtStartLevelDB = New System.Windows.Forms.TextBox()
+        Me.txtStartLevelV = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtLevelOhmLoad = New System.Windows.Forms.TextBox()
@@ -129,10 +138,19 @@ Public Class Form1
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtLevelDistortionThreshDB = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.txtFreqSource = New System.Windows.Forms.TextBox()
+        Me.txtFreqSourceV = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.txtSNRReferenceDB = New System.Windows.Forms.TextBox()
+        Me.txtSNRReferenceV = New System.Windows.Forms.TextBox()
         Me.lbLevelThresh = New System.Windows.Forms.Label()
+        Me.txtStartLevelDB = New System.Windows.Forms.TextBox()
+        Me.txtSNRReferenceDB = New System.Windows.Forms.TextBox()
+        Me.txtFreqSourceDB = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -144,26 +162,26 @@ Public Class Form1
         Me.RunButton.TabIndex = 1
         Me.RunButton.Text = "Run"
         '
-        'txtStartLevelDB
+        'txtStartLevelV
         '
-        Me.txtStartLevelDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtStartLevelDB.Location = New System.Drawing.Point(129, 71)
-        Me.txtStartLevelDB.Name = "txtStartLevelDB"
-        Me.txtStartLevelDB.Size = New System.Drawing.Size(53, 20)
-        Me.txtStartLevelDB.TabIndex = 6
-        Me.txtStartLevelDB.Text = "0.200"
-        Me.txtStartLevelDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtStartLevelV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtStartLevelV.Location = New System.Drawing.Point(129, 71)
+        Me.txtStartLevelV.Name = "txtStartLevelV"
+        Me.txtStartLevelV.Size = New System.Drawing.Size(53, 20)
+        Me.txtStartLevelV.TabIndex = 6
+        Me.txtStartLevelV.Text = "0.200"
+        Me.txtStartLevelV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Crimson
-        Me.Label1.Location = New System.Drawing.Point(21, 71)
+        Me.Label1.Location = New System.Drawing.Point(56, 74)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(98, 13)
+        Me.Label1.Size = New System.Drawing.Size(69, 13)
         Me.Label1.TabIndex = 7
-        Me.Label1.Text = "Start Level (DB)"
+        Me.Label1.Text = "Start Level"
         '
         'Label2
         '
@@ -188,7 +206,7 @@ Public Class Form1
         Me.chkFreqDistActive.AutoSize = True
         Me.chkFreqDistActive.Checked = True
         Me.chkFreqDistActive.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkFreqDistActive.Location = New System.Drawing.Point(24, 268)
+        Me.chkFreqDistActive.Location = New System.Drawing.Point(15, 258)
         Me.chkFreqDistActive.Name = "chkFreqDistActive"
         Me.chkFreqDistActive.Size = New System.Drawing.Size(196, 17)
         Me.chkFreqDistActive.TabIndex = 10
@@ -331,31 +349,31 @@ Public Class Form1
         '
         'Chart1
         '
-        ChartArea1.Name = "Level"
-        ChartArea2.Name = "Distortion"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend1.Enabled = False
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        ChartArea13.Name = "Level"
+        ChartArea14.Name = "Distortion"
+        Me.Chart1.ChartAreas.Add(ChartArea13)
+        Me.Chart1.ChartAreas.Add(ChartArea14)
+        Legend7.Enabled = False
+        Legend7.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend7)
         Me.Chart1.Location = New System.Drawing.Point(265, 12)
         Me.Chart1.Name = "Chart1"
-        Series1.ChartArea = "Level"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series2.ChartArea = "Distortion"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series2"
-        Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Series.Add(Series2)
+        Series13.ChartArea = "Level"
+        Series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series13.Legend = "Legend1"
+        Series13.Name = "Series1"
+        Series14.ChartArea = "Distortion"
+        Series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series14.Legend = "Legend1"
+        Series14.Name = "Series2"
+        Me.Chart1.Series.Add(Series13)
+        Me.Chart1.Series.Add(Series14)
         Me.Chart1.Size = New System.Drawing.Size(1026, 645)
         Me.Chart1.TabIndex = 39
         Me.Chart1.Text = "Chart1"
-        Title1.Name = "Basic Test"
-        Title1.Text = "Basic Test"
-        Me.Chart1.Titles.Add(Title1)
+        Title7.Name = "Basic Test"
+        Title7.Text = "Basic Test"
+        Me.Chart1.Titles.Add(Title7)
         '
         'chk318uS
         '
@@ -401,42 +419,42 @@ Public Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Crimson
-        Me.Label5.Location = New System.Drawing.Point(19, 301)
+        Me.Label5.Location = New System.Drawing.Point(74, 304)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(94, 13)
+        Me.Label5.Size = New System.Drawing.Size(47, 13)
         Me.Label5.TabIndex = 47
-        Me.Label5.Text = "Source (VRMS)"
+        Me.Label5.Text = "Source"
         '
-        'txtFreqSource
+        'txtFreqSourceV
         '
-        Me.txtFreqSource.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFreqSource.Location = New System.Drawing.Point(127, 301)
-        Me.txtFreqSource.Name = "txtFreqSource"
-        Me.txtFreqSource.Size = New System.Drawing.Size(53, 20)
-        Me.txtFreqSource.TabIndex = 46
-        Me.txtFreqSource.Text = "0.200"
-        Me.txtFreqSource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtFreqSourceV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtFreqSourceV.Location = New System.Drawing.Point(127, 301)
+        Me.txtFreqSourceV.Name = "txtFreqSourceV"
+        Me.txtFreqSourceV.Size = New System.Drawing.Size(53, 20)
+        Me.txtFreqSourceV.TabIndex = 46
+        Me.txtFreqSourceV.Text = "0.200"
+        Me.txtFreqSourceV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Crimson
-        Me.Label6.Location = New System.Drawing.Point(18, 206)
+        Me.Label6.Location = New System.Drawing.Point(59, 209)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(95, 13)
+        Me.Label6.Size = New System.Drawing.Size(66, 13)
         Me.Label6.TabIndex = 49
-        Me.Label6.Text = "Reference (DB)"
+        Me.Label6.Text = "Reference"
         '
-        'txtSNRReferenceDB
+        'txtSNRReferenceV
         '
-        Me.txtSNRReferenceDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSNRReferenceDB.Location = New System.Drawing.Point(126, 206)
-        Me.txtSNRReferenceDB.Name = "txtSNRReferenceDB"
-        Me.txtSNRReferenceDB.Size = New System.Drawing.Size(53, 20)
-        Me.txtSNRReferenceDB.TabIndex = 48
-        Me.txtSNRReferenceDB.Text = "0.200"
-        Me.txtSNRReferenceDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtSNRReferenceV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSNRReferenceV.Location = New System.Drawing.Point(126, 206)
+        Me.txtSNRReferenceV.Name = "txtSNRReferenceV"
+        Me.txtSNRReferenceV.Size = New System.Drawing.Size(53, 20)
+        Me.txtSNRReferenceV.TabIndex = 48
+        Me.txtSNRReferenceV.Text = "0.200"
+        Me.txtSNRReferenceV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'lbLevelThresh
         '
@@ -446,15 +464,120 @@ Public Class Form1
         Me.lbLevelThresh.Size = New System.Drawing.Size(0, 13)
         Me.lbLevelThresh.TabIndex = 50
         '
+        'txtStartLevelDB
+        '
+        Me.txtStartLevelDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtStartLevelDB.Location = New System.Drawing.Point(188, 71)
+        Me.txtStartLevelDB.Name = "txtStartLevelDB"
+        Me.txtStartLevelDB.Size = New System.Drawing.Size(53, 20)
+        Me.txtStartLevelDB.TabIndex = 51
+        Me.txtStartLevelDB.Text = "-13.98"
+        Me.txtStartLevelDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtSNRReferenceDB
+        '
+        Me.txtSNRReferenceDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSNRReferenceDB.Location = New System.Drawing.Point(185, 206)
+        Me.txtSNRReferenceDB.Name = "txtSNRReferenceDB"
+        Me.txtSNRReferenceDB.Size = New System.Drawing.Size(53, 20)
+        Me.txtSNRReferenceDB.TabIndex = 52
+        Me.txtSNRReferenceDB.Text = "-13.98"
+        Me.txtSNRReferenceDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtFreqSourceDB
+        '
+        Me.txtFreqSourceDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtFreqSourceDB.Location = New System.Drawing.Point(188, 301)
+        Me.txtFreqSourceDB.Name = "txtFreqSourceDB"
+        Me.txtFreqSourceDB.Size = New System.Drawing.Size(53, 20)
+        Me.txtFreqSourceDB.TabIndex = 53
+        Me.txtFreqSourceDB.Text = "-13.98"
+        Me.txtFreqSourceDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.Crimson
+        Me.Label7.Location = New System.Drawing.Point(137, 55)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(42, 13)
+        Me.Label7.TabIndex = 54
+        Me.Label7.Text = "VRMS"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.Crimson
+        Me.Label8.Location = New System.Drawing.Point(188, 55)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(24, 13)
+        Me.Label8.TabIndex = 55
+        Me.Label8.Text = "DB"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.Crimson
+        Me.Label9.Location = New System.Drawing.Point(188, 190)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(24, 13)
+        Me.Label9.TabIndex = 57
+        Me.Label9.Text = "DB"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.Crimson
+        Me.Label10.Location = New System.Drawing.Point(137, 190)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(42, 13)
+        Me.Label10.TabIndex = 56
+        Me.Label10.Text = "VRMS"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.Crimson
+        Me.Label14.Location = New System.Drawing.Point(191, 285)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(24, 13)
+        Me.Label14.TabIndex = 59
+        Me.Label14.Text = "DB"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.ForeColor = System.Drawing.Color.Crimson
+        Me.Label15.Location = New System.Drawing.Point(140, 285)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(42, 13)
+        Me.Label15.TabIndex = 58
+        Me.Label15.Text = "VRMS"
+        '
         'Form1
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1316, 669)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.txtFreqSourceDB)
+        Me.Controls.Add(Me.txtSNRReferenceDB)
+        Me.Controls.Add(Me.txtStartLevelDB)
         Me.Controls.Add(Me.lbLevelThresh)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.txtSNRReferenceDB)
+        Me.Controls.Add(Me.txtSNRReferenceV)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.txtFreqSource)
+        Me.Controls.Add(Me.txtFreqSourceV)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.txtLevelDistortionThreshDB)
         Me.Controls.Add(Me.chkLevelSweepActive)
@@ -478,7 +601,7 @@ Public Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtLevelOhmLoad)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.txtStartLevelDB)
+        Me.Controls.Add(Me.txtStartLevelV)
         Me.Controls.Add(Me.RunButton)
         Me.Name = "Form1"
         Me.Text = "Boonton Precision Audio"
@@ -506,6 +629,7 @@ Public Class Form1
                 IgnoredErrors.Add(BoontonController.GetErrorNumber())
             Case MsgBoxResult.Cancel  'close reference to the instrument
                 BoontonController.Close() 'end program
+                Me.Close()
                 End
         End Select
     End Sub
@@ -653,7 +777,7 @@ Public Class Form1
 
 
 
-        txtStartLevelDB.Text = System.Math.Round(OutputDB - 1, 3)
+        txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
     End Sub
 
 
@@ -702,19 +826,19 @@ Public Class Form1
         Dim Start, Finish As Byte
         Dim Sweep As Byte
 
-        Dim Freq() As Integer = {10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, _
-            630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000, _
+        Dim Freq() As Integer = {10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500,
+            630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000,
             25000, 32000, 40000, 50000, 64000, 80000, 100000, 128000, 140000}
 
         'Charts for which filters should be used at various frequencies
-        Dim FSet() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _
-                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, _
+        Dim FSet() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                             1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 
 
 
-        Dim LSet() As Integer = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, _
-                                2, 2, 2, 2, 3, 3, 3, 3, 3, _
+        Dim LSet() As Integer = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                                2, 2, 2, 2, 3, 3, 3, 3, 3,
                                 0, 0, 0, 0, 0, 0}
 
 
@@ -725,7 +849,7 @@ Public Class Form1
 
         Chart1.Series.Clear()
         Chart1.ChartAreas.Clear()
-        
+
         Chart1.ChartAreas.Add(FreqLevelArea)
         Chart1.ChartAreas.Add(FreqDistortionArea)
 
@@ -767,7 +891,7 @@ Public Class Form1
                 GPIBCleanup("Error setting frequency or source")
             End If
 
-            If (Not BoontonController.SetSource(Val(txtFreqSource.Text), chkInverseRIAA.Checked, chk318uS.Checked)) Then
+            If (Not BoontonController.SetSource(Val(txtFreqSourceV.Text), chkInverseRIAA.Checked, chk318uS.Checked)) Then
                 GPIBCleanup("Err setting source")
             End If
 
@@ -945,18 +1069,21 @@ Public Class Form1
             Dim Data As PersistentData
             Data = CType(deserializer.Deserialize(SettingsFileStream), PersistentData)
             SettingsFileStream.Close()
-            
+
 
             chkLevelSweepActive.Checked = Data.LevelSweep
-            txtStartLevelDB.Text = Data.SweepStartLevel
+            txtStartLevelV.Text = Data.SweepStartLevel
+            txtStartLevelDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SweepStartLevel))
             txtLevelOhmLoad.Text = Data.SweepOhmLoad
             txtLevelDistortionThreshDB.Text = Data.DistortionThresh
 
             chkSNRActive.Checked = Data.SNR
-            txtSNRReferenceDB.Text = Data.SNRRef
+            txtSNRReferenceV.Text = Data.SNRRef
+            txtSNRReferenceDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SNRRef))
 
             chkFreqDistActive.Checked = Data.FreqAndDist
-            txtFreqSource.Text = Data.FreqSource
+            txtFreqSourceV.Text = Data.FreqSource
+            txtFreqSourceDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.FreqSource))
             chkFullBandwidth.Checked = Data.FullRange
             chkInverseRIAA.Checked = Data.InverseRIAA
             chk318uS.Checked = Data.use318uS
@@ -1036,15 +1163,15 @@ Public Class Form1
         Dim Data As New PersistentData
 
         Data.LevelSweep = chkLevelSweepActive.Checked
-        Data.SweepStartLevel = txtStartLevelDB.Text
+        Data.SweepStartLevel = txtStartLevelV.Text
         Data.SweepOhmLoad = txtLevelOhmLoad.Text
         Data.DistortionThresh = txtLevelDistortionThreshDB.Text
 
         Data.SNR = chkSNRActive.Checked
-        Data.SNRRef = txtSNRReferenceDB.Text
+        Data.SNRRef = txtSNRReferenceV.Text
 
         Data.FreqAndDist = chkFreqDistActive.Checked
-        Data.FreqSource = txtFreqSource.Text
+        Data.FreqSource = txtFreqSourceV.Text
         Data.FullRange = chkFullBandwidth.Checked
         Data.InverseRIAA = chkInverseRIAA.Checked
         Data.use318uS = chk318uS.Checked
@@ -1062,7 +1189,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub EndTestButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EndTestButton.Click
+    Private Sub EndTestButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EndTestButton.Click, txtStartLevelV.TextChanged
         CleanupFlag = 1
     End Sub
 
@@ -1228,5 +1355,38 @@ Public Class Form1
             Chart1.Titles(0).Text = txtDescription.Text
         End If
 
+    End Sub
+
+    'If change was from DB, sets V to proper value, and the other way around.
+    Private Sub DBVConverter(sender As Object, e As EventArgs) Handles txtStartLevelV.TextChanged, txtStartLevelDB.TextChanged, txtSNRReferenceV.TextChanged, txtSNRReferenceDB.TextChanged, txtFreqSourceV.TextChanged, txtFreqSourceDB.TextChanged
+        Dim textBox As TextBox = CType(sender, TextBox)
+        If (Not textBox.Focused) Then Return
+        Dim name As String = textBox.Name.ToString
+        'The last character of the name is either V or B
+        Dim dimention As Char = name.Substring(name.Length - 1)
+        If (dimention = "V"c) Then
+            Dim dbName As String = name.Substring(0, name.Length - 1) & "DB"
+            Dim dbText As Control = Me.Controls.Item(dbName)
+            If (IsNothing(dbText)) Then Return
+
+            Dim vVal As Double
+            If (Not Double.TryParse(textBox.Text, vVal)) Then
+                dbText.Text = "NaN"
+                Return
+            End If
+            dbText.Text = BoontonInterface.VoltsToDB(vVal)
+
+        Else
+            Dim vName As String = name.Substring(0, name.Length - 2) & "V"
+            Dim vText As Control = Me.Controls.Item(vName)
+            If (IsNothing(vText)) Then Return
+
+            Dim dbVal As Double
+            If (Not Double.TryParse(textBox.Text, dbVal)) Then
+                vText.Text = "NaN"
+                Return
+            End If
+            vText.Text = BoontonInterface.DBToVolts(CDbl(dbVal))
+        End If
     End Sub
 End Class

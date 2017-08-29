@@ -9,6 +9,8 @@ Public Class BoontonInterface
     Private Const ReadDelay As Integer = 1000           'Amount of time spent waiting after telling controller to detect something
     Private Const SNDelay As Integer = 2000      'Delay specific delay
 
+    Private Const REFERENCEVOLTAGE As Double = 1 'Reference Voltage for converting V to and from DB
+
     Private thisBoonton As Device
     Private Boonton As Integer              'a reference to my instrument
 
@@ -111,7 +113,7 @@ Public Class BoontonInterface
                 Return LastCommand & " is not a recognized command."
             'This one is made up for errors within the program
             Case 1000
-                Return LastCommand & " resulted in the program error " & If(IsNothing(ErrorObject), ErrorObject.Message, "Unknown Error")
+                Return LastCommand & " resulted in the program error " & If(IsNothing(ErrorObject), "Unknown Error", ErrorObject.Message)
             Case Else
                 Return LastCommand & " invoked an unknown error. Please look up the error code."
         End Select
@@ -210,6 +212,16 @@ Public Class BoontonInterface
         Result = Strings.Left(Result, 7)
         Return System.Math.Round(Val(Result), 3)
 
+    End Function
+
+    Public Shared Function VoltsToDB(ByRef Volts As Double) As Double
+        'This is the minimum setting for the boonton
+        If (Volts < 0.000001) Then Return -120
+        Return 20 * Math.Log10(Volts / REFERENCEVOLTAGE)
+    End Function
+
+    Public Shared Function DBToVolts(ByRef DB As Double) As Double
+        Return Math.Pow(10, DB / 20) * REFERENCEVOLTAGE
     End Function
 
     'Brent added DB to set distortion as DB
