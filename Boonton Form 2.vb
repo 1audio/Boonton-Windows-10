@@ -28,7 +28,7 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Public Class Form1
     Inherits System.Windows.Forms.Form
     Dim CleanupFlag As Byte
-    Dim BoontonController As BoontonInterface
+    Dim BoontonController As KeithleyInterface
 
     'Dim buffer As String
     'Dim Dev As Short
@@ -106,12 +106,12 @@ Public Class Form1
     'Do not modify it using the code editor.
     Friend WithEvents RunButton As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim ChartArea13 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim ChartArea14 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title7 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title2 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.RunButton = New System.Windows.Forms.Button()
         Me.txtStartLevelV = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -305,7 +305,7 @@ Public Class Form1
         Me.tbGPIBAddress.Name = "tbGPIBAddress"
         Me.tbGPIBAddress.Size = New System.Drawing.Size(53, 20)
         Me.tbGPIBAddress.TabIndex = 29
-        Me.tbGPIBAddress.Text = "1"
+        Me.tbGPIBAddress.Text = "0"
         Me.tbGPIBAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'tbRemoteAddress
@@ -349,31 +349,31 @@ Public Class Form1
         '
         'Chart1
         '
-        ChartArea13.Name = "Level"
-        ChartArea14.Name = "Distortion"
-        Me.Chart1.ChartAreas.Add(ChartArea13)
-        Me.Chart1.ChartAreas.Add(ChartArea14)
-        Legend7.Enabled = False
-        Legend7.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend7)
+        ChartArea3.Name = "Level"
+        ChartArea4.Name = "Distortion"
+        Me.Chart1.ChartAreas.Add(ChartArea3)
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend2.Enabled = False
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(265, 12)
         Me.Chart1.Name = "Chart1"
-        Series13.ChartArea = "Level"
-        Series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series13.Legend = "Legend1"
-        Series13.Name = "Series1"
-        Series14.ChartArea = "Distortion"
-        Series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series14.Legend = "Legend1"
-        Series14.Name = "Series2"
-        Me.Chart1.Series.Add(Series13)
-        Me.Chart1.Series.Add(Series14)
+        Series3.ChartArea = "Level"
+        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Series4.ChartArea = "Distortion"
+        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series2"
+        Me.Chart1.Series.Add(Series3)
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(1026, 645)
         Me.Chart1.TabIndex = 39
         Me.Chart1.Text = "Chart1"
-        Title7.Name = "Basic Test"
-        Title7.Text = "Basic Test"
-        Me.Chart1.Titles.Add(Title7)
+        Title2.Name = "Basic Test"
+        Title2.Text = "Basic Test"
+        Me.Chart1.Titles.Add(Title2)
         '
         'chk318uS
         '
@@ -621,17 +621,17 @@ Public Class Form1
         ' corresponding bit in the global status variable. If the call
         ' failed, this procedure prints an error message, takes the device
         ' offline and exits.
-        If (IgnoredErrors.IndexOf(CInt(BoontonController.GetErrorNumber())) <> -1) Then Return
-        Dim Result As MsgBoxResult = MsgBox(BoontonController.GetErrorString() + " Click Yes to ignore further errors of this type, No to reprompt if this type of error appears, and Cancel to shut down", MsgBoxStyle.YesNoCancel, "Error " & CStr(BoontonController.GetErrorNumber()))
+        'If (IgnoredErrors.IndexOf(CInt(BoontonController.GetErrorNumber())) <> -1) Then Return
+        Dim Result As MsgBoxResult = MsgBox(msg & " Click Yes to ignore further errors of this type, No to reprompt if this type of error appears, and Cancel to shut down", MsgBoxStyle.YesNoCancel, "Error")
 
-        Select Case Result
-            Case MsgBoxResult.Yes
-                IgnoredErrors.Add(BoontonController.GetErrorNumber())
-            Case MsgBoxResult.Cancel  'close reference to the instrument
-                BoontonController.Close() 'end program
-                Me.Close()
+        'Select Case Result
+        'Case MsgBoxResult.Yes
+        'IgnoredErrors.Add(BoontonController.GetErrorNumber())
+        'Case MsgBoxResult.Cancel  'close reference to the instrument
+        'BoontonController.Close() 'end program
+        Me.Close()
                 End
-        End Select
+        'End Select
     End Sub
 
     Dim IgnoredErrors As New ArrayList()
@@ -658,7 +658,7 @@ Public Class Form1
         Dim BDINDEX As Integer = Val(tbGPIBAddress.Text)           'GPIB Board Address
         Dim PRIMARY_ADDR As Integer = Val(tbRemoteAddress.Text)    'Remote Instrument Address
 
-        BoontonController = New BoontonInterface(BDINDEX, PRIMARY_ADDR)
+        BoontonController = New KeithleyInterface(BDINDEX, PRIMARY_ADDR)
 
         If (IsNothing(BoontonController)) Then
             Throw New System.Exception("Something went wrong, check your constructor")
@@ -677,7 +677,7 @@ Public Class Form1
 
 
         ' Take the device offline and make sure there's no output
-        BoontonController.Close()
+        'BoontonController.Close()
 
         If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag) Then
             SaveRawData()
@@ -727,9 +727,9 @@ Public Class Form1
 
 
         ' set source frequency and give a 500ms settling pause
-        If (Not BoontonController.SetFloatingInput(True)) Then GPIBCleanup("Floating issue")
-        If (Not BoontonController.SetFilters(0, 0)) Then GPIBCleanup("Floating issue")
-        If (Not BoontonController.SetFrequency(1000)) Then GPIBCleanup("Floating issue")
+        'If (Not BoontonController.SetFloatingInput(True)) Then GPIBCleanup("Floating issue")
+        'If (Not BoontonController.SetFilters(0, 0)) Then GPIBCleanup("Floating issue")
+        'If (Not BoontonController.SetFrequency(1000)) Then GPIBCleanup("Floating issue")
 
         System.Threading.Thread.Sleep((500))
         OutputDB = CDbl(txtStartLevelDB.Text)
@@ -746,7 +746,7 @@ Public Class Form1
             End If
 
             'sets output voltage at either normal level
-            If (Not BoontonController.SetSourceDB(OutputDB)) Then GPIBCleanup("Error Setting Source")
+            'If (Not BoontonController.SetSourceDB(OutputDB)) Then GPIBCleanup("Error Setting Source")
             System.Threading.Thread.Sleep(5000)
             'sets 'DIST' measure mode, wait one second for settling and 
             'then reads Boonton buffer
@@ -783,7 +783,7 @@ Public Class Form1
 
     Private Sub SNRTest()
         Dim testLevel As Double = CDbl(LevelSweepSeries.Points.Item(LevelSweepSeries.Points.Count - 1).XValue)
-        BoontonController.SetZero()
+        'BoontonController.SetZero()
 
         Dim Freq As Integer() = {20000, 30000, 30000, 30000}
         Dim FSet() As Integer = {0, 0, 1, 2}
@@ -794,9 +794,9 @@ Public Class Form1
 
 
         For i As Integer = 0 To Freq.Length - 1
-            If (Not BoontonController.SetFilters(If(DisableOptionalFiltersCheckbox.Checked, 0, FSet(i)), 0)) Then
-                GPIBCleanup("Error setting the filters")
-            End If
+            'If (Not BoontonController.SetFilters(If(DisableOptionalFiltersCheckbox.Checked, 0, FSet(i)), 0)) Then
+            'GPIBCleanup("Error setting the filters")
+            'End If
 
             ' set source frequency and give a 500ms settling pause
             If (Not BoontonController.SetFrequency(Freq(i))) Then
@@ -842,7 +842,7 @@ Public Class Form1
                                 0, 0, 0, 0, 0, 0}
 
 
-        If (Not BoontonController.SetFloatingInput(True)) Then Call GPIBCleanup("Error setting floating input")
+        'If (Not BoontonController.SetFloatingInput(True)) Then Call GPIBCleanup("Error setting floating input")
 
         FreqLevelSeries.Points.Clear()
         FreqDistortionSeries.Points.Clear()
@@ -878,34 +878,36 @@ Public Class Form1
         '  by writing a command to it and reading its response. 
         ' ========================================================================
 
-
+        If (Not BoontonController.PepareForDistortion()) Then GPIBCleanup("There's been a problem initing")
         For Sweep = Start To Finish
 
             ' set proper filters
-            If (Not BoontonController.SetFilters(If(DisableOptionalFiltersCheckbox.Checked, 0, FSet(Sweep)), LSet(Sweep))) Then
-                GPIBCleanup("Error setting the filters")
-            End If
+            'If (Not BoontonController.SetFilters(If(DisableOptionalFiltersCheckbox.Checked, 0, FSet(Sweep)), LSet(Sweep))) Then
+            'GPIBCleanup("Error setting the filters")
+            'End If
 
             ' set source frequency and give a 500ms settling pause
             If (Not BoontonController.SetFrequency((Freq(Sweep)))) Then
                 GPIBCleanup("Error setting frequency or source")
             End If
 
-            If (Not BoontonController.SetSource(Val(txtFreqSourceV.Text), chkInverseRIAA.Checked, chk318uS.Checked)) Then
+            If (Not BoontonController.SetSource(Val(txtFreqSourceV.Text))) Then
                 GPIBCleanup("Err setting source")
             End If
 
-            If (Not BoontonController.Tune(Freq(Sweep))) Then
-                GPIBCleanup("Error tuning")
-            End If
+            'If (Not BoontonController.Tune(Freq(Sweep))) Then
+            'GPIBCleanup("Error tuning")
+            'End If
 
             System.Threading.Thread.Sleep(500)
+
+            Dim Distortion As Double = BoontonController.MeasureTHDN()
+            If (Double.IsNaN(Distortion)) Then Call GPIBCleanup("Error trying to collect Distortion")
+
 
             Dim dB As Double = BoontonController.MeasureVRMS()
             If (Double.IsNaN(dB)) Then Call GPIBCleanup("Error trying to collect Level")
 
-            Dim Distortion As Double = BoontonController.MeasureTHDN()
-            If (Double.IsNaN(Distortion)) Then Call GPIBCleanup("Error trying to collect Distortion")
 
 
             'Brent Chart
@@ -1388,5 +1390,9 @@ Public Class Form1
             End If
             vText.Text = BoontonInterface.DBToVolts(CDbl(dbVal))
         End If
+    End Sub
+
+    Private Sub tbGPIBAddress_TextChanged(sender As Object, e As EventArgs) Handles tbGPIBAddress.TextChanged
+
     End Sub
 End Class
