@@ -813,7 +813,7 @@ Public Class Form1
 
 
 
-        txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
+        'txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
     End Sub
 
 
