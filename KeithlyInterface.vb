@@ -2,6 +2,9 @@
 Imports System.IO
 
 Public Class KeithleyInterface
+    Private Const REFERENCEVOLTAGE As Double = 1 'Reference Voltage for converting V to and from DB
+
+
     Private thisBoonton As Device
 
     Public Sub New(ByVal GPIBAddress As Integer, ByVal PrimaryAddress As Integer)
@@ -91,13 +94,29 @@ Public Class KeithleyInterface
         Return Write(":UNIT:DIST " & UnitString)
     End Function
 
+    Public Function SetFilter(ByVal TheFilter As Filter) As Boolean
+        Dim FilterString As String
+        Select Case TheFilter
+            Case Filter.A
+                FilterString = "A"
+            Case Filter.CCIR
+                FilterString = "CCIRARM"
+            Case Filter.NONE
+                FilterString = "NONE"
+            Case Else
+                Throw New System.Exception("I have no idea how you got here...")
+        End Select
+
+        Return Write(":SENS:DIST:SFIL " & FilterString)
+    End Function
+
     Public Function PepareForDistortion() As Boolean
         Write("*RST")
         Write(":SENSE:FUNC 'DIST'")
         Write(":SENS:DIST:TYPE THDN")
         Write(":SENS:DIST:HARM 2")
         Write(":UNIT:DIST DB")
-        Write(":SENS:DIST:SFIL NONE")
+        SetFilter(Filter.NONE)
         Write(":SENS:DIST:RANGE:AUTO ON")
         Write(":OUTP:IMP HIZ")
         Write(":OUTP:CHAN2 ISINE")
@@ -159,6 +178,22 @@ Public Class KeithleyInterface
         THDN
         SINAD
     End Enum
+
+    Public Enum Filter
+        CCIR
+        A
+        NONE
+    End Enum
+
+    Public Shared Function VoltsToDB(ByRef Volts As Double) As Double
+        'This is the minimum setting for the boonton
+        If (Volts < 0.000001) Then Return -120
+        Return 20 * Math.Log10(Volts / REFERENCEVOLTAGE)
+    End Function
+
+    Public Shared Function DBToVolts(ByRef DB As Double) As Double
+        Return Math.Pow(10, DB / 20) * REFERENCEVOLTAGE
+    End Function
 End Class
 ' THD READING
 ' *RST ' Restore default settings.

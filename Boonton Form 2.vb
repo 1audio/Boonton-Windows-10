@@ -1,4 +1,3 @@
-
 'Boonton Audio Controller - Automated GPIB Data Collection for the Boonton 1120/1121
 'Copyright (C) 2006  Shannon Parks    email: separks@diytube.com
 '
@@ -27,8 +26,8 @@ Imports System.Windows.Forms.DataVisualization.Charting
 
 Public Class Form1
     Inherits System.Windows.Forms.Form
-    Dim CleanupFlag As Byte
-    Dim BoontonController As KeithleyInterface
+    Dim CleanupFlag As Byte = 0
+    Dim KeithleyController As KeithleyInterface
 
     'Dim buffer As String
     'Dim Dev As Short
@@ -43,12 +42,9 @@ Public Class Form1
     Friend WithEvents chkSNRActive As System.Windows.Forms.CheckBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtDescription As System.Windows.Forms.TextBox
-    Friend WithEvents chkFullBandwidth As System.Windows.Forms.CheckBox
     Friend WithEvents chkInverseRIAA As System.Windows.Forms.CheckBox
     Friend WithEvents EndTestButton As System.Windows.Forms.Button
     Friend WithEvents QuitButton As System.Windows.Forms.Button
-    Friend WithEvents tbExcelPath As System.Windows.Forms.TextBox
-    Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents tbGPIBAddress As System.Windows.Forms.TextBox
     Friend WithEvents tbRemoteAddress As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -73,6 +69,10 @@ Public Class Form1
     Friend WithEvents Label10 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents txtSourceMaxV As TextBox
+    Friend WithEvents txtLevelDistortionThreshV As TextBox
+    Friend WithEvents txtSourceMaxDB As TextBox
     'the string returned from instrument
     Dim ResByte As Integer
 #Region " Windows Form Designer generated code "
@@ -106,12 +106,12 @@ Public Class Form1
     'Do not modify it using the code editor.
     Friend WithEvents RunButton As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title2 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title1 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.RunButton = New System.Windows.Forms.Button()
         Me.txtStartLevelV = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -121,12 +121,9 @@ Public Class Form1
         Me.chkSNRActive = New System.Windows.Forms.CheckBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtDescription = New System.Windows.Forms.TextBox()
-        Me.chkFullBandwidth = New System.Windows.Forms.CheckBox()
         Me.chkInverseRIAA = New System.Windows.Forms.CheckBox()
         Me.EndTestButton = New System.Windows.Forms.Button()
         Me.QuitButton = New System.Windows.Forms.Button()
-        Me.tbExcelPath = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.tbGPIBAddress = New System.Windows.Forms.TextBox()
         Me.tbRemoteAddress = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -151,6 +148,10 @@ Public Class Form1
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.txtSourceMaxV = New System.Windows.Forms.TextBox()
+        Me.txtLevelDistortionThreshV = New System.Windows.Forms.TextBox()
+        Me.txtSourceMaxDB = New System.Windows.Forms.TextBox()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -186,7 +187,7 @@ Public Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(65, 97)
+        Me.Label2.Location = New System.Drawing.Point(65, 149)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(56, 13)
         Me.Label2.TabIndex = 9
@@ -194,7 +195,7 @@ Public Class Form1
         '
         'txtLevelOhmLoad
         '
-        Me.txtLevelOhmLoad.Location = New System.Drawing.Point(129, 97)
+        Me.txtLevelOhmLoad.Location = New System.Drawing.Point(129, 149)
         Me.txtLevelOhmLoad.Name = "txtLevelOhmLoad"
         Me.txtLevelOhmLoad.Size = New System.Drawing.Size(53, 20)
         Me.txtLevelOhmLoad.TabIndex = 8
@@ -206,7 +207,7 @@ Public Class Form1
         Me.chkFreqDistActive.AutoSize = True
         Me.chkFreqDistActive.Checked = True
         Me.chkFreqDistActive.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkFreqDistActive.Location = New System.Drawing.Point(15, 258)
+        Me.chkFreqDistActive.Location = New System.Drawing.Point(15, 292)
         Me.chkFreqDistActive.Name = "chkFreqDistActive"
         Me.chkFreqDistActive.Size = New System.Drawing.Size(196, 17)
         Me.chkFreqDistActive.TabIndex = 10
@@ -218,7 +219,7 @@ Public Class Form1
         Me.chkSNRActive.AutoSize = True
         Me.chkSNRActive.Checked = True
         Me.chkSNRActive.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkSNRActive.Location = New System.Drawing.Point(33, 174)
+        Me.chkSNRActive.Location = New System.Drawing.Point(33, 208)
         Me.chkSNRActive.Name = "chkSNRActive"
         Me.chkSNRActive.Size = New System.Drawing.Size(49, 17)
         Me.chkSNRActive.TabIndex = 12
@@ -228,7 +229,7 @@ Public Class Form1
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(10, 411)
+        Me.Label3.Location = New System.Drawing.Point(10, 445)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(60, 13)
         Me.Label3.TabIndex = 14
@@ -236,29 +237,17 @@ Public Class Form1
         '
         'txtDescription
         '
-        Me.txtDescription.Location = New System.Drawing.Point(84, 404)
+        Me.txtDescription.Location = New System.Drawing.Point(84, 438)
         Me.txtDescription.Name = "txtDescription"
         Me.txtDescription.Size = New System.Drawing.Size(175, 20)
         Me.txtDescription.TabIndex = 13
         Me.txtDescription.Text = "Basic Test"
         Me.txtDescription.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'chkFullBandwidth
-        '
-        Me.chkFullBandwidth.AutoSize = True
-        Me.chkFullBandwidth.Checked = True
-        Me.chkFullBandwidth.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkFullBandwidth.Location = New System.Drawing.Point(51, 322)
-        Me.chkFullBandwidth.Name = "chkFullBandwidth"
-        Me.chkFullBandwidth.Size = New System.Drawing.Size(103, 17)
-        Me.chkFullBandwidth.TabIndex = 23
-        Me.chkFullBandwidth.Text = "10Hz to 140kHz"
-        Me.chkFullBandwidth.UseVisualStyleBackColor = True
-        '
         'chkInverseRIAA
         '
         Me.chkInverseRIAA.AutoSize = True
-        Me.chkInverseRIAA.Location = New System.Drawing.Point(51, 345)
+        Me.chkInverseRIAA.Location = New System.Drawing.Point(51, 379)
         Me.chkInverseRIAA.Name = "chkInverseRIAA"
         Me.chkInverseRIAA.Size = New System.Drawing.Size(105, 17)
         Me.chkInverseRIAA.TabIndex = 24
@@ -282,30 +271,13 @@ Public Class Form1
         Me.QuitButton.TabIndex = 26
         Me.QuitButton.Text = "Quit"
         '
-        'tbExcelPath
-        '
-        Me.tbExcelPath.Location = New System.Drawing.Point(84, 430)
-        Me.tbExcelPath.Name = "tbExcelPath"
-        Me.tbExcelPath.Size = New System.Drawing.Size(175, 20)
-        Me.tbExcelPath.TabIndex = 27
-        Me.tbExcelPath.Text = "c:\boonton\"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(12, 437)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(58, 13)
-        Me.Label11.TabIndex = 28
-        Me.Label11.Text = "Excel Path"
-        '
         'tbGPIBAddress
         '
         Me.tbGPIBAddress.Location = New System.Drawing.Point(126, 464)
         Me.tbGPIBAddress.Name = "tbGPIBAddress"
         Me.tbGPIBAddress.Size = New System.Drawing.Size(53, 20)
         Me.tbGPIBAddress.TabIndex = 29
-        Me.tbGPIBAddress.Text = "0"
+        Me.tbGPIBAddress.Text = "1"
         Me.tbGPIBAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'tbRemoteAddress
@@ -349,36 +321,36 @@ Public Class Form1
         '
         'Chart1
         '
-        ChartArea3.Name = "Level"
-        ChartArea4.Name = "Distortion"
-        Me.Chart1.ChartAreas.Add(ChartArea3)
-        Me.Chart1.ChartAreas.Add(ChartArea4)
-        Legend2.Enabled = False
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        ChartArea1.Name = "Level"
+        ChartArea2.Name = "Distortion"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
+        Me.Chart1.ChartAreas.Add(ChartArea2)
+        Legend1.Enabled = False
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(265, 12)
         Me.Chart1.Name = "Chart1"
-        Series3.ChartArea = "Level"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series1"
-        Series4.ChartArea = "Distortion"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series2"
-        Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Series.Add(Series4)
+        Series1.ChartArea = "Level"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Series2.ChartArea = "Distortion"
+        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series2"
+        Me.Chart1.Series.Add(Series1)
+        Me.Chart1.Series.Add(Series2)
         Me.Chart1.Size = New System.Drawing.Size(1026, 645)
         Me.Chart1.TabIndex = 39
         Me.Chart1.Text = "Chart1"
-        Title2.Name = "Basic Test"
-        Title2.Text = "Basic Test"
-        Me.Chart1.Titles.Add(Title2)
+        Title1.Name = "Basic Test"
+        Title1.Text = "Basic Test"
+        Me.Chart1.Titles.Add(Title1)
         '
         'chk318uS
         '
         Me.chk318uS.AutoSize = True
-        Me.chk318uS.Location = New System.Drawing.Point(51, 368)
+        Me.chk318uS.Location = New System.Drawing.Point(51, 402)
         Me.chk318uS.Name = "chk318uS"
         Me.chk318uS.Size = New System.Drawing.Size(93, 17)
         Me.chk318uS.TabIndex = 40
@@ -400,18 +372,20 @@ Public Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(0, 126)
+        Me.Label4.Location = New System.Drawing.Point(22, 97)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(125, 13)
+        Me.Label4.Size = New System.Drawing.Size(101, 13)
         Me.Label4.TabIndex = 45
-        Me.Label4.Text = "Distortion Threshold (DB)"
+        Me.Label4.Text = "Distortion Threshold"
         '
         'txtLevelDistortionThreshDB
         '
-        Me.txtLevelDistortionThreshDB.Location = New System.Drawing.Point(129, 123)
+        Me.txtLevelDistortionThreshDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.txtLevelDistortionThreshDB.Location = New System.Drawing.Point(188, 97)
         Me.txtLevelDistortionThreshDB.Name = "txtLevelDistortionThreshDB"
         Me.txtLevelDistortionThreshDB.Size = New System.Drawing.Size(53, 20)
         Me.txtLevelDistortionThreshDB.TabIndex = 44
+        Me.txtLevelDistortionThreshDB.Text = "0"
         Me.txtLevelDistortionThreshDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label5
@@ -419,7 +393,7 @@ Public Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Crimson
-        Me.Label5.Location = New System.Drawing.Point(74, 304)
+        Me.Label5.Location = New System.Drawing.Point(74, 338)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(47, 13)
         Me.Label5.TabIndex = 47
@@ -428,7 +402,7 @@ Public Class Form1
         'txtFreqSourceV
         '
         Me.txtFreqSourceV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFreqSourceV.Location = New System.Drawing.Point(127, 301)
+        Me.txtFreqSourceV.Location = New System.Drawing.Point(127, 335)
         Me.txtFreqSourceV.Name = "txtFreqSourceV"
         Me.txtFreqSourceV.Size = New System.Drawing.Size(53, 20)
         Me.txtFreqSourceV.TabIndex = 46
@@ -440,7 +414,7 @@ Public Class Form1
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Crimson
-        Me.Label6.Location = New System.Drawing.Point(59, 209)
+        Me.Label6.Location = New System.Drawing.Point(59, 243)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(66, 13)
         Me.Label6.TabIndex = 49
@@ -449,7 +423,7 @@ Public Class Form1
         'txtSNRReferenceV
         '
         Me.txtSNRReferenceV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSNRReferenceV.Location = New System.Drawing.Point(126, 206)
+        Me.txtSNRReferenceV.Location = New System.Drawing.Point(126, 240)
         Me.txtSNRReferenceV.Name = "txtSNRReferenceV"
         Me.txtSNRReferenceV.Size = New System.Drawing.Size(53, 20)
         Me.txtSNRReferenceV.TabIndex = 48
@@ -459,7 +433,7 @@ Public Class Form1
         'lbLevelThresh
         '
         Me.lbLevelThresh.AutoSize = True
-        Me.lbLevelThresh.Location = New System.Drawing.Point(126, 158)
+        Me.lbLevelThresh.Location = New System.Drawing.Point(126, 195)
         Me.lbLevelThresh.Name = "lbLevelThresh"
         Me.lbLevelThresh.Size = New System.Drawing.Size(0, 13)
         Me.lbLevelThresh.TabIndex = 50
@@ -477,7 +451,7 @@ Public Class Form1
         'txtSNRReferenceDB
         '
         Me.txtSNRReferenceDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSNRReferenceDB.Location = New System.Drawing.Point(185, 206)
+        Me.txtSNRReferenceDB.Location = New System.Drawing.Point(185, 240)
         Me.txtSNRReferenceDB.Name = "txtSNRReferenceDB"
         Me.txtSNRReferenceDB.Size = New System.Drawing.Size(53, 20)
         Me.txtSNRReferenceDB.TabIndex = 52
@@ -487,7 +461,7 @@ Public Class Form1
         'txtFreqSourceDB
         '
         Me.txtFreqSourceDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFreqSourceDB.Location = New System.Drawing.Point(188, 301)
+        Me.txtFreqSourceDB.Location = New System.Drawing.Point(188, 335)
         Me.txtFreqSourceDB.Name = "txtFreqSourceDB"
         Me.txtFreqSourceDB.Size = New System.Drawing.Size(53, 20)
         Me.txtFreqSourceDB.TabIndex = 53
@@ -521,7 +495,7 @@ Public Class Form1
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.Crimson
-        Me.Label9.Location = New System.Drawing.Point(188, 190)
+        Me.Label9.Location = New System.Drawing.Point(188, 224)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(24, 13)
         Me.Label9.TabIndex = 57
@@ -532,7 +506,7 @@ Public Class Form1
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Crimson
-        Me.Label10.Location = New System.Drawing.Point(137, 190)
+        Me.Label10.Location = New System.Drawing.Point(137, 224)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(42, 13)
         Me.Label10.TabIndex = 56
@@ -543,7 +517,7 @@ Public Class Form1
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.ForeColor = System.Drawing.Color.Crimson
-        Me.Label14.Location = New System.Drawing.Point(191, 285)
+        Me.Label14.Location = New System.Drawing.Point(191, 319)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(24, 13)
         Me.Label14.TabIndex = 59
@@ -554,16 +528,59 @@ Public Class Form1
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.ForeColor = System.Drawing.Color.Crimson
-        Me.Label15.Location = New System.Drawing.Point(140, 285)
+        Me.Label15.Location = New System.Drawing.Point(140, 319)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(42, 13)
         Me.Label15.TabIndex = 58
         Me.Label15.Text = "VRMS"
         '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(22, 123)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(93, 13)
+        Me.Label11.TabIndex = 61
+        Me.Label11.Text = "Source Max Level"
+        '
+        'txtSourceMaxV
+        '
+        Me.txtSourceMaxV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.txtSourceMaxV.Location = New System.Drawing.Point(129, 123)
+        Me.txtSourceMaxV.Name = "txtSourceMaxV"
+        Me.txtSourceMaxV.Size = New System.Drawing.Size(53, 20)
+        Me.txtSourceMaxV.TabIndex = 60
+        Me.txtSourceMaxV.Text = "10"
+        Me.txtSourceMaxV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtLevelDistortionThreshV
+        '
+        Me.txtLevelDistortionThreshV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.txtLevelDistortionThreshV.Location = New System.Drawing.Point(129, 97)
+        Me.txtLevelDistortionThreshV.Name = "txtLevelDistortionThreshV"
+        Me.txtLevelDistortionThreshV.Size = New System.Drawing.Size(53, 20)
+        Me.txtLevelDistortionThreshV.TabIndex = 62
+        Me.txtLevelDistortionThreshV.Text = "1"
+        Me.txtLevelDistortionThreshV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtSourceMaxDB
+        '
+        Me.txtSourceMaxDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.txtSourceMaxDB.Location = New System.Drawing.Point(188, 123)
+        Me.txtSourceMaxDB.Name = "txtSourceMaxDB"
+        Me.txtSourceMaxDB.Size = New System.Drawing.Size(53, 20)
+        Me.txtSourceMaxDB.TabIndex = 63
+        Me.txtSourceMaxDB.Text = "20"
+        Me.txtSourceMaxDB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Form1
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1316, 669)
+        Me.Controls.Add(Me.txtSourceMaxDB)
+        Me.Controls.Add(Me.txtLevelDistortionThreshV)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.txtSourceMaxV)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.Label9)
@@ -588,12 +605,9 @@ Public Class Form1
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.tbRemoteAddress)
         Me.Controls.Add(Me.tbGPIBAddress)
-        Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.tbExcelPath)
         Me.Controls.Add(Me.QuitButton)
         Me.Controls.Add(Me.EndTestButton)
         Me.Controls.Add(Me.chkInverseRIAA)
-        Me.Controls.Add(Me.chkFullBandwidth)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtDescription)
         Me.Controls.Add(Me.chkSNRActive)
@@ -621,16 +635,16 @@ Public Class Form1
         ' corresponding bit in the global status variable. If the call
         ' failed, this procedure prints an error message, takes the device
         ' offline and exits.
-        'If (IgnoredErrors.IndexOf(CInt(BoontonController.GetErrorNumber())) <> -1) Then Return
-        Dim Result As MsgBoxResult = MsgBox(msg & " Click Yes to ignore further errors of this type, No to reprompt if this type of error appears, and Cancel to shut down", MsgBoxStyle.YesNoCancel, "Error")
+        'If (IgnoredErrors.IndexOf(CInt(KeithleyController.GetErrorNumber())) <> -1) Then Return
+        'Dim Result As MsgBoxResult = MsgBox(KeithleyController.GetErrorString() + " Click Yes to ignore further errors of this type, No to reprompt if this type of error appears, and Cancel to shut down", MsgBoxStyle.YesNoCancel, "Error " & CStr(KeithleyController.GetErrorNumber()))
 
         'Select Case Result
         'Case MsgBoxResult.Yes
-        'IgnoredErrors.Add(BoontonController.GetErrorNumber())
+        'IgnoredErrors.Add(KeithleyController.GetErrorNumber())
         'Case MsgBoxResult.Cancel  'close reference to the instrument
-        'BoontonController.Close() 'end program
-        Me.Close()
-                End
+        'KeithleyController.Close() 'end program
+        'Me.Close()
+        End
         'End Select
     End Sub
 
@@ -658,9 +672,9 @@ Public Class Form1
         Dim BDINDEX As Integer = Val(tbGPIBAddress.Text)           'GPIB Board Address
         Dim PRIMARY_ADDR As Integer = Val(tbRemoteAddress.Text)    'Remote Instrument Address
 
-        BoontonController = New KeithleyInterface(BDINDEX, PRIMARY_ADDR)
+        KeithleyController = New KeithleyInterface(BDINDEX, PRIMARY_ADDR)
 
-        If (IsNothing(BoontonController)) Then
+        If (IsNothing(KeithleyController)) Then
             Throw New System.Exception("Something went wrong, check your constructor")
         End If
 
@@ -677,7 +691,7 @@ Public Class Form1
 
 
         ' Take the device offline and make sure there's no output
-        'BoontonController.Close()
+        'KeithleyController.Close()
 
         If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag) Then
             SaveRawData()
@@ -701,6 +715,7 @@ Public Class Form1
     End Sub
 
 
+    Dim LastOutput
     Private Sub LevelSweepTest()
 
         Dim OutputDB As Double
@@ -708,6 +723,7 @@ Public Class Form1
         Dim Distortion As Double
         Dim Level As Double
         Dim IncrementByOneFlag As Boolean
+        Dim MaxDB As Double
 
 
         Chart1.Series.Clear()
@@ -727,13 +743,12 @@ Public Class Form1
 
 
         ' set source frequency and give a 500ms settling pause
-        'If (Not BoontonController.SetFloatingInput(True)) Then GPIBCleanup("Floating issue")
-        'If (Not BoontonController.SetFilters(0, 0)) Then GPIBCleanup("Floating issue")
-        'If (Not BoontonController.SetFrequency(1000)) Then GPIBCleanup("Floating issue")
+        If (Not KeithleyController.PepareForDistortion()) Then GPIBCleanup("There's been a problem initing")
 
         System.Threading.Thread.Sleep((500))
         OutputDB = CDbl(txtStartLevelDB.Text)
         DBThresh = CDbl(txtLevelDistortionThreshDB.Text)
+        MaxDB = CDbl(txtSourceMaxDB.Text)
 
         'main loop
         IncrementByOneFlag = False
@@ -745,14 +760,19 @@ Public Class Form1
                 OutputDB -= 5
             End If
 
-            'sets output voltage at either normal level
-            'If (Not BoontonController.SetSourceDB(OutputDB)) Then GPIBCleanup("Error Setting Source")
+            If (OutputDB > MaxDB) Then
+                Chart1.Titles(0).Text = Chart1.Titles(0).Text + " WARNING: Maximum level was reached on level sweep."
+                Exit Do
+            End If
+
+            If (Not KeithleyController.SetSource(KeithleyInterface.DBToVolts(OutputDB))) Then GPIBCleanup("Error Setting Source")
+            LastOutput = OutputDB
             System.Threading.Thread.Sleep(5000)
             'sets 'DIST' measure mode, wait one second for settling and 
             'then reads Boonton buffer
-            Distortion = BoontonController.MeasureTHDN()
+            Distortion = KeithleyController.MeasureTHDN()
             If (Double.IsNaN(Distortion)) Then GPIBCleanup("Error Collecting Distortion")
-            Level = BoontonController.MeasureVRMS()
+            Level = KeithleyController.MeasureVRMS()
             If (Double.IsNaN(Level)) Then GPIBCleanup("Error Collecting Level")
 
 
@@ -769,11 +789,10 @@ Public Class Form1
             System.Windows.Forms.Application.DoEvents()
             If CleanupFlag = 1 Then Return
         Loop
-
         'sets up 'LEVEL' mode, waits one second for settling and then reads Boonton buffer
 
         'Give measurement in dBs
-        lbLevelThresh.Text = CStr(BoontonController.MeasureVRMS())
+        lbLevelThresh.Text = CStr(KeithleyController.MeasureVRMS())
 
 
 
@@ -783,10 +802,12 @@ Public Class Form1
 
     Private Sub SNRTest()
         Dim testLevel As Double = CDbl(LevelSweepSeries.Points.Item(LevelSweepSeries.Points.Count - 1).XValue)
-        'BoontonController.SetZero()
+        KeithleyController.PepareForDistortion()
+        If (Not KeithleyController.SetDistortionType(KeithleyInterface.DistortionType.SINAD)) Then GPIBCleanup("Problem setting Distortion")
 
-        Dim Freq As Integer() = {20000, 30000, 30000, 30000}
-        Dim FSet() As Integer = {0, 0, 1, 2}
+
+        Dim Freq As Integer() = {1000, 1000, 1000}
+        Dim FSet As KeithleyInterface.Filter() = {KeithleyInterface.Filter.NONE, KeithleyInterface.Filter.A, KeithleyInterface.Filter.CCIR}
 
         SNRPercentageSeries.Points.Clear()
         Chart1.ChartAreas.Add(SNRPercentageArea)
@@ -794,22 +815,24 @@ Public Class Form1
 
 
         For i As Integer = 0 To Freq.Length - 1
-            'If (Not BoontonController.SetFilters(If(DisableOptionalFiltersCheckbox.Checked, 0, FSet(i)), 0)) Then
-            'GPIBCleanup("Error setting the filters")
-            'End If
+            If (Not KeithleyController.SetFilter(FSet(i))) Then
+                GPIBCleanup("Error setting the filters")
+            End If
 
             ' set source frequency and give a 500ms settling pause
-            If (Not BoontonController.SetFrequency(Freq(i))) Then
+            If (Not KeithleyController.SetFrequency(Freq(i))) Then
                 GPIBCleanup("Error setting frequency or source")
             End If
 
+            KeithleyController.SetSource(KeithleyInterface.DBToVolts(LastOutput))
+
             System.Threading.Thread.Sleep(2000)
 
-            Dim Distortion As Double = BoontonController.MeasureVRMS()
+            Dim Distortion As Double = KeithleyController.MeasureTHDN()
 
             Dim text As String = CStr(Freq(i))
-            If (FSet(i) <> 0) Then
-                text = text & "F" & CStr(FSet(i))
+            If (FSet(i) <> KeithleyInterface.Filter.NONE) Then
+                text = text & "F" & If(FSet(i) = KeithleyInterface.Filter.A, "A", "CCIR")
             End If
 
             SNRPercentageSeries.Points.AddXY(text, testLevel + Distortion)
@@ -826,9 +849,8 @@ Public Class Form1
         Dim Start, Finish As Byte
         Dim Sweep As Byte
 
-        Dim Freq() As Integer = {10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500,
-            630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000,
-            25000, 32000, 40000, 50000, 64000, 80000, 100000, 128000, 140000}
+        Dim Freq() As Integer = {20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500,
+            630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000}
 
         'Charts for which filters should be used at various frequencies
         Dim FSet() As Integer = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -862,13 +884,8 @@ Public Class Form1
         'this selects the start and stop point within the Freq() array
         'eg default operation scans from 20Hz (Freq(2)) to 20kHz (Freq(15))
         'note: full bandwidth cannot be used with the inverse RIAA
-        If chkFullBandwidth.CheckState = 1 And chkInverseRIAA.CheckState = 0 Then
-            Start = 0
-            Finish = 42
-        Else
-            Start = 3
-            Finish = 33
-        End If
+        Start = 0
+        Finish = 30
 
         ' ========================================================================
         '
@@ -878,7 +895,7 @@ Public Class Form1
         '  by writing a command to it and reading its response. 
         ' ========================================================================
 
-        If (Not BoontonController.PepareForDistortion()) Then GPIBCleanup("There's been a problem initing")
+        If (Not KeithleyController.PepareForDistortion()) Then GPIBCleanup("There's been a problem initing")
         For Sweep = Start To Finish
 
             ' set proper filters
@@ -887,11 +904,11 @@ Public Class Form1
             'End If
 
             ' set source frequency and give a 500ms settling pause
-            If (Not BoontonController.SetFrequency((Freq(Sweep)))) Then
+            If (Not KeithleyController.SetFrequency((Freq(Sweep)))) Then
                 GPIBCleanup("Error setting frequency or source")
             End If
 
-            If (Not BoontonController.SetSource(Val(txtFreqSourceV.Text))) Then
+            If (Not KeithleyController.SetSource(Val(txtFreqSourceV.Text))) Then
                 GPIBCleanup("Err setting source")
             End If
 
@@ -901,11 +918,11 @@ Public Class Form1
 
             System.Threading.Thread.Sleep(500)
 
-            Dim Distortion As Double = BoontonController.MeasureTHDN()
+            Dim Distortion As Double = KeithleyController.MeasureTHDN()
             If (Double.IsNaN(Distortion)) Then Call GPIBCleanup("Error trying to collect Distortion")
 
 
-            Dim dB As Double = BoontonController.MeasureVRMS()
+            Dim dB As Double = KeithleyController.MeasureVRMS()
             If (Double.IsNaN(dB)) Then Call GPIBCleanup("Error trying to collect Level")
 
 
@@ -1086,12 +1103,10 @@ Public Class Form1
             chkFreqDistActive.Checked = Data.FreqAndDist
             txtFreqSourceV.Text = Data.FreqSource
             txtFreqSourceDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.FreqSource))
-            chkFullBandwidth.Checked = Data.FullRange
             chkInverseRIAA.Checked = Data.InverseRIAA
             chk318uS.Checked = Data.use318uS
 
             txtDescription.Text = Data.Description
-            tbExcelPath.Text = Data.ExcelPath
             tbGPIBAddress.Text = Data.GPIBAddress
             tbRemoteAddress.Text = Data.RemoteAddress
         End If
@@ -1111,6 +1126,10 @@ Public Class Form1
         FreqLevelArea.AxisX.Title = "Frequency (Hz)"
         FreqLevelArea.AxisY.Title = "Level (dBV)"
         FreqLevelArea.AlignmentOrientation = AreaAlignmentOrientations.Horizontal
+        FreqLevelArea.AxisX.MajorGrid.LineColor = Color.LightGray
+        FreqLevelArea.AxisX.LineColor = Color.LightGray
+        FreqLevelArea.AxisY.LineColor = Color.LightGray
+        FreqLevelArea.AxisY.MajorGrid.LineColor = Color.LightGray
 
 
 
@@ -1127,7 +1146,10 @@ Public Class Form1
         FreqDistortionArea.AxisX.Title = "Frequency (Hz)"
         FreqDistortionArea.AxisY.Title = "Distortion (dB)"
         FreqDistortionArea.AlignmentOrientation = AreaAlignmentOrientations.Horizontal
-
+        FreqDistortionArea.AxisX.MajorGrid.LineColor = Color.LightGray
+        FreqDistortionArea.AxisX.LineColor = Color.LightGray
+        FreqDistortionArea.AxisY.LineColor = Color.LightGray
+        FreqDistortionArea.AxisY.MajorGrid.LineColor = Color.LightGray
 
         LevelSweepSeries.XValueType = ChartValueType.String
         LevelSweepSeries.ChartArea = "Sweep"
@@ -1142,6 +1164,10 @@ Public Class Form1
         LevelSweepArea.AxisX.Title = "Level (dB)"
         LevelSweepArea.AxisY.Title = "Distortion (dB)"
         LevelSweepArea.AlignmentOrientation = AreaAlignmentOrientations.Horizontal
+        LevelSweepArea.AxisX.MajorGrid.LineColor = Color.LightGray
+        LevelSweepArea.AxisX.LineColor = Color.LightGray
+        LevelSweepArea.AxisY.LineColor = Color.LightGray
+        LevelSweepArea.AxisY.MajorGrid.LineColor = Color.LightGray
 
 
 
@@ -1158,6 +1184,10 @@ Public Class Form1
         SNRPercentageArea.AxisX.Title = "Frequency (Hz)"
         SNRPercentageArea.AxisY.Title = "Distortion (dB)"
         SNRPercentageArea.AlignmentOrientation = AreaAlignmentOrientations.Horizontal
+        SNRPercentageArea.AxisX.MajorGrid.LineColor = Color.LightGray
+        SNRPercentageArea.AxisX.LineColor = Color.LightGray
+        SNRPercentageArea.AxisY.LineColor = Color.LightGray
+        SNRPercentageArea.AxisY.MajorGrid.LineColor = Color.LightGray
     End Sub
 
     ' Records settings onto object to be saved onto a file
@@ -1174,12 +1204,10 @@ Public Class Form1
 
         Data.FreqAndDist = chkFreqDistActive.Checked
         Data.FreqSource = txtFreqSourceV.Text
-        Data.FullRange = chkFullBandwidth.Checked
         Data.InverseRIAA = chkInverseRIAA.Checked
         Data.use318uS = chk318uS.Checked
 
         Data.Description = txtDescription.Text
-        Data.ExcelPath = tbExcelPath.Text
         Data.GPIBAddress = tbGPIBAddress.Text
         Data.RemoteAddress = tbRemoteAddress.Text
 
@@ -1191,7 +1219,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub EndTestButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EndTestButton.Click, txtStartLevelV.TextChanged
+    Private Sub EndTestButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EndTestButton.Click
         CleanupFlag = 1
     End Sub
 
@@ -1342,12 +1370,10 @@ Public Class Form1
 
         Public FreqAndDist As Boolean
         Public FreqSource As String
-        Public FullRange As Boolean
         Public InverseRIAA As Boolean
         Public use318uS As Boolean
 
         Public Description As String
-        Public ExcelPath As String
         Public GPIBAddress As String
         Public RemoteAddress As String
     End Class
@@ -1360,7 +1386,7 @@ Public Class Form1
     End Sub
 
     'If change was from DB, sets V to proper value, and the other way around.
-    Private Sub DBVConverter(sender As Object, e As EventArgs) Handles txtStartLevelV.TextChanged, txtStartLevelDB.TextChanged, txtSNRReferenceV.TextChanged, txtSNRReferenceDB.TextChanged, txtFreqSourceV.TextChanged, txtFreqSourceDB.TextChanged
+    Private Sub DBVConverter(sender As Object, e As EventArgs) Handles txtStartLevelV.TextChanged, txtStartLevelDB.TextChanged, txtSNRReferenceV.TextChanged, txtSNRReferenceDB.TextChanged, txtFreqSourceV.TextChanged, txtFreqSourceDB.TextChanged, txtLevelDistortionThreshV.TextChanged, txtLevelDistortionThreshDB.TextChanged, txtSourceMaxV.TextChanged, txtSourceMaxDB.TextChanged
         Dim textBox As TextBox = CType(sender, TextBox)
         If (Not textBox.Focused) Then Return
         Dim name As String = textBox.Name.ToString
@@ -1390,9 +1416,5 @@ Public Class Form1
             End If
             vText.Text = BoontonInterface.DBToVolts(CDbl(dbVal))
         End If
-    End Sub
-
-    Private Sub tbGPIBAddress_TextChanged(sender As Object, e As EventArgs) Handles tbGPIBAddress.TextChanged
-
     End Sub
 End Class
