@@ -796,7 +796,7 @@ Public Class Form1
 
 
 
-        txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
+        'txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
     End Sub
 
 
@@ -832,7 +832,7 @@ Public Class Form1
 
             Dim text As String = CStr(Freq(i))
             If (FSet(i) <> KeithleyInterface.Filter.NONE) Then
-                text = text & "F" & If(FSet(i) = KeithleyInterface.Filter.A, "A", "CCIR")
+                text = text & If(FSet(i) = KeithleyInterface.Filter.A, "A", "CCIR")
             End If
 
             SNRPercentageSeries.Points.AddXY(text, testLevel + Distortion)
@@ -1095,6 +1095,9 @@ Public Class Form1
             txtStartLevelDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SweepStartLevel))
             txtLevelOhmLoad.Text = Data.SweepOhmLoad
             txtLevelDistortionThreshDB.Text = Data.DistortionThresh
+            txtLevelDistortionThreshV.Text = KeithleyInterface.DBToVolts(CDbl(Data.DistortionThresh))
+            txtSourceMaxV.Text = Data.SourceMax
+            txtSourceMaxDB.Text = KeithleyInterface.VoltsToDB(CDbl(Data.SourceMax))
 
             chkSNRActive.Checked = Data.SNR
             txtSNRReferenceV.Text = Data.SNRRef
@@ -1198,6 +1201,7 @@ Public Class Form1
         Data.SweepStartLevel = txtStartLevelV.Text
         Data.SweepOhmLoad = txtLevelOhmLoad.Text
         Data.DistortionThresh = txtLevelDistortionThreshDB.Text
+        Data.SourceMax = txtSourceMaxV.Text
 
         Data.SNR = chkSNRActive.Checked
         Data.SNRRef = txtSNRReferenceV.Text
@@ -1364,6 +1368,7 @@ Public Class Form1
         Public SweepStartLevel As String
         Public SweepOhmLoad As String
         Public DistortionThresh As String
+        Public SourceMax As String
 
         Public SNR As Boolean
         Public SNRRef As String
