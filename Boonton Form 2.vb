@@ -652,6 +652,13 @@ Public Class Form1
         ' failed, this procedure prints an error message, takes the device
         ' offline and exits.
         If (IgnoredErrors.IndexOf(CInt(BoontonController.GetErrorNumber())) <> -1) Then Return
+        If (BoontonController.GetErrorString.Contains("Nonexistent GPIB interface")) Then
+            MsgBox("Boonton not found.", MsgBoxStyle.OkOnly, "Error")
+            CleanupFlag = 1
+            'This makes all the other instances of this command get ignored.
+            IgnoredErrors.Add(1000)
+            Return
+        End If
         Dim Result As MsgBoxResult = MsgBox(BoontonController.GetErrorString() + " Click Yes to ignore further errors of this type, No to reprompt if this type of error appears, and Cancel to shut down", MsgBoxStyle.YesNoCancel, "Error " & CStr(BoontonController.GetErrorNumber()))
 
         Select Case Result
@@ -684,6 +691,8 @@ Public Class Form1
         QuitButton.Enabled = False
         EndTestButton.Enabled = True
 
+        IgnoredErrors.Clear()
+
 
         Dim BDINDEX As Integer = Val(tbGPIBAddress.Text)           'GPIB Board Address
         Dim PRIMARY_ADDR As Integer = Val(tbRemoteAddress.Text)    'Remote Instrument Address
@@ -709,7 +718,7 @@ Public Class Form1
         ' Take the device offline and make sure there's no output
         BoontonController.Close()
 
-        If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag) Then
+        If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag = 1) Then
             SaveRawData()
             SaveChartImage()
         End If

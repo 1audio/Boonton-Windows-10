@@ -169,14 +169,14 @@ Public Class BoontonInterface
             RIAAOutput = Math.Pow(10, (dB3 / 20))   'converts from dB to voltage gain
             RIAAOutput = OutputVolts / RIAAOutput    'divides 1kHz input by voltage gain
             RIAAOutput = Math.Round(RIAAOutput, 5)  'rounds to tens of microvolts - the Boonton limit
-            Return SetSourceDB(RIAAOutput) 'source level to variable volts
+            Return SetSourceVolts(RIAAOutput) 'source level to variable volts
         ElseIf (InverseRIAA And val318uS) Then 'with Allen Wright 3.18uS time constant
             dB3 = (10 * Math.Log10(1 + (4 * Math.PI * Math.PI * 0.000318 * 0.000318 * currentFrequency * currentFrequency))) + (10 * Math.Log10(1 + (4 * Math.PI * Math.PI * 0.00000318 * 0.00000318 * currentFrequency * currentFrequency))) - (10 * Math.Log10(1 + (4 * Math.PI * Math.PI * 0.00318 * 0.00318 * currentFrequency * currentFrequency))) - (10 * Math.Log10(1 + (4 * Math.PI * Math.PI * 0.000075 * 0.000075 * currentFrequency * currentFrequency)))
             dB3 = dB3 + 19.909285
             RIAAOutput = Math.Pow(10, (dB3 / 20))
             RIAAOutput = OutputVolts / RIAAOutput
             RIAAOutput = Math.Round(RIAAOutput, 5)
-            Return SetSourceDB(RIAAOutput) 'source level to variable volts
+            Return SetSourceVolts(RIAAOutput) 'source level to variable volts
         End If
 
         Return SetSourceVolts(OutputVolts)
