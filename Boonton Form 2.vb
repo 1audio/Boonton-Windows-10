@@ -878,14 +878,14 @@ Public Class Form1
 
             System.Threading.Thread.Sleep(2000)
 
-            Dim Distortion As Double = BoontonController.MeasureVRMS()
+            Dim Noise As Double = BoontonController.MeasureVRMS()
 
             Dim text As String = CStr(Freq(i))
             If (FSet(i) <> 0) Then
                 text = text & "F" & CStr(FSet(i))
             End If
 
-            SNRPercentageSeries.Points.AddXY(text, testLevel + Distortion)
+            SNRPercentageSeries.Points.AddXY(text, testLevel - Noise)
 
 
             'this allows other events, such as a hard escape
