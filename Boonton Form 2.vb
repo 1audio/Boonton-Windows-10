@@ -106,12 +106,12 @@ Public Class Form1
     'Do not modify it using the code editor.
     Friend WithEvents RunButton As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title1 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title2 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.RunButton = New System.Windows.Forms.Button()
         Me.txtStartLevelV = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -207,11 +207,11 @@ Public Class Form1
         Me.chkFreqDistActive.AutoSize = True
         Me.chkFreqDistActive.Checked = True
         Me.chkFreqDistActive.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkFreqDistActive.Location = New System.Drawing.Point(15, 292)
+        Me.chkFreqDistActive.Location = New System.Drawing.Point(33, 290)
         Me.chkFreqDistActive.Name = "chkFreqDistActive"
-        Me.chkFreqDistActive.Size = New System.Drawing.Size(196, 17)
+        Me.chkFreqDistActive.Size = New System.Drawing.Size(191, 17)
         Me.chkFreqDistActive.TabIndex = 10
-        Me.chkFreqDistActive.Text = "Frequency And Distortion Response"
+        Me.chkFreqDistActive.Text = "Level And Distortion vs. Frequency"
         Me.chkFreqDistActive.UseVisualStyleBackColor = True
         '
         'chkSNRActive
@@ -219,11 +219,11 @@ Public Class Form1
         Me.chkSNRActive.AutoSize = True
         Me.chkSNRActive.Checked = True
         Me.chkSNRActive.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkSNRActive.Location = New System.Drawing.Point(33, 208)
+        Me.chkSNRActive.Location = New System.Drawing.Point(33, 188)
         Me.chkSNRActive.Name = "chkSNRActive"
-        Me.chkSNRActive.Size = New System.Drawing.Size(49, 17)
+        Me.chkSNRActive.Size = New System.Drawing.Size(125, 17)
         Me.chkSNRActive.TabIndex = 12
-        Me.chkSNRActive.Text = "SNR"
+        Me.chkSNRActive.Text = "Signal to Noise Ratio"
         Me.chkSNRActive.UseVisualStyleBackColor = True
         '
         'Label3
@@ -249,9 +249,9 @@ Public Class Form1
         Me.chkInverseRIAA.AutoSize = True
         Me.chkInverseRIAA.Location = New System.Drawing.Point(51, 379)
         Me.chkInverseRIAA.Name = "chkInverseRIAA"
-        Me.chkInverseRIAA.Size = New System.Drawing.Size(105, 17)
+        Me.chkInverseRIAA.Size = New System.Drawing.Size(135, 17)
         Me.chkInverseRIAA.TabIndex = 24
-        Me.chkInverseRIAA.Text = "Inverse RIAA Eq"
+        Me.chkInverseRIAA.Text = "Inverse RIAA Equalizer"
         Me.chkInverseRIAA.UseVisualStyleBackColor = True
         '
         'EndTestButton
@@ -277,7 +277,7 @@ Public Class Form1
         Me.tbGPIBAddress.Name = "tbGPIBAddress"
         Me.tbGPIBAddress.Size = New System.Drawing.Size(53, 20)
         Me.tbGPIBAddress.TabIndex = 29
-        Me.tbGPIBAddress.Text = "1"
+        Me.tbGPIBAddress.Text = "0"
         Me.tbGPIBAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'tbRemoteAddress
@@ -321,40 +321,40 @@ Public Class Form1
         '
         'Chart1
         '
-        ChartArea1.Name = "Level"
-        ChartArea2.Name = "Distortion"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend1.Enabled = False
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        ChartArea3.Name = "Level"
+        ChartArea4.Name = "Distortion"
+        Me.Chart1.ChartAreas.Add(ChartArea3)
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend2.Enabled = False
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(265, 12)
         Me.Chart1.Name = "Chart1"
-        Series1.ChartArea = "Level"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series2.ChartArea = "Distortion"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series2"
-        Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Series.Add(Series2)
+        Series3.ChartArea = "Level"
+        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Series4.ChartArea = "Distortion"
+        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series2"
+        Me.Chart1.Series.Add(Series3)
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(1026, 645)
         Me.Chart1.TabIndex = 39
         Me.Chart1.Text = "Chart1"
-        Title1.Name = "Basic Test"
-        Title1.Text = "Basic Test"
-        Me.Chart1.Titles.Add(Title1)
+        Title2.Name = "Basic Test"
+        Title2.Text = "Basic Test"
+        Me.Chart1.Titles.Add(Title2)
         '
         'chk318uS
         '
         Me.chk318uS.AutoSize = True
         Me.chk318uS.Location = New System.Drawing.Point(51, 402)
         Me.chk318uS.Name = "chk318uS"
-        Me.chk318uS.Size = New System.Drawing.Size(93, 17)
+        Me.chk318uS.Size = New System.Drawing.Size(183, 17)
         Me.chk318uS.TabIndex = 40
-        Me.chk318uS.Text = "3.18uS Adl. tc"
+        Me.chk318uS.Text = "3.18 uS Additional Time Constant"
         Me.chk318uS.UseVisualStyleBackColor = True
         '
         'chkLevelSweepActive
@@ -393,11 +393,11 @@ Public Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Crimson
-        Me.Label5.Location = New System.Drawing.Point(74, 338)
+        Me.Label5.Location = New System.Drawing.Point(41, 338)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(47, 13)
+        Me.Label5.Size = New System.Drawing.Size(82, 13)
         Me.Label5.TabIndex = 47
-        Me.Label5.Text = "Source"
+        Me.Label5.Text = "Source Level"
         '
         'txtFreqSourceV
         '
@@ -414,11 +414,11 @@ Public Class Form1
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Crimson
-        Me.Label6.Location = New System.Drawing.Point(59, 243)
+        Me.Label6.Location = New System.Drawing.Point(108, 208)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(66, 13)
+        Me.Label6.Size = New System.Drawing.Size(131, 13)
         Me.Label6.TabIndex = 49
-        Me.Label6.Text = "Reference"
+        Me.Label6.Text = "SNR Reference Level"
         '
         'txtSNRReferenceV
         '
@@ -618,7 +618,7 @@ Public Class Form1
         Me.Controls.Add(Me.txtStartLevelV)
         Me.Controls.Add(Me.RunButton)
         Me.Name = "Form1"
-        Me.Text = "Boonton Precision Audio"
+        Me.Text = "Keithley 2015 Automated Measurements"
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
