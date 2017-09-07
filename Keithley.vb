@@ -113,7 +113,7 @@ Public MustInherit Class Keithley
 
         'take left seven digits from the buffer, ie trim garbage to prevent math error
         result = result.Trim()
-        Return CDbl(result)
+        Return VoltsToDB(CDbl(result))
 
     End Function
 

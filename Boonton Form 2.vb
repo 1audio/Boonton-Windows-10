@@ -733,10 +733,6 @@ Public Class Form1
             FreqDistResponseTest()
         End If
 
-
-        ' Take the device offline and make sure there's no output
-        'KeithleyController.Close()
-
         If ((chkLevelSweepActive.Checked Or chkSNRActive.Checked Or chkFreqDistActive.Checked) And Not CleanupFlag) Then
             SaveRawData()
             SaveChartImage()
@@ -809,6 +805,7 @@ Public Class Form1
                 Exit Do
             End If
 
+            Dim test = Keithley.DBToVolts(OutputDB)
             If (Not KeithleyController.SetSource(Keithley.DBToVolts(OutputDB))) Then GPIBCleanup("Error Setting Source")
             LastOutput = OutputDB
             System.Threading.Thread.Sleep(5000)
@@ -836,18 +833,13 @@ Public Class Form1
         'sets up 'LEVEL' mode, waits one second for settling and then reads Boonton buffer
 
         'Give measurement in dBs
-        lbLevelThresh.Text = CStr(KeithleyController.MeasureVRMS())
-
-
-
-        'txtStartLevelV.Text = System.Math.Round(OutputDB - 1, 3)
+        'lbLevelThresh.Text = CStr(KeithleyController.MeasureVRMS())
     End Sub
 
 
     Private Sub SNRTest()
         Dim testLevel As Double = CDbl(LevelSweepSeries.Points.Item(LevelSweepSeries.Points.Count - 1).XValue)
         KeithleyController.PepareForDistortion()
-        If (Not KeithleyController.SetDistortionType(Keithley.DistortionType.SINAD)) Then GPIBCleanup("Problem setting Distortion")
 
 
         Dim Freq As Integer() = {1000, 1000, 1000}
@@ -868,18 +860,21 @@ Public Class Form1
                 GPIBCleanup("Error setting frequency or source")
             End If
 
-            KeithleyController.SetSource(Keithley.DBToVolts(LastOutput))
+            KeithleyController.SetSource(0)
 
             System.Threading.Thread.Sleep(2000)
 
-            Dim Distortion As Double = KeithleyController.MeasureTHDN()
+            'MeasureTHDN activates the READ? command, which updates the values,
+            'Allowing the Level measurement to take place
+            KeithleyController.MeasureTHDN()
+            Dim Noise As Double = KeithleyController.MeasureVRMS()
 
             Dim text As String = CStr(Freq(i))
             If (FSet(i) <> Keithley.Filter.NONE) Then
                 text = text & If(FSet(i) = Keithley.Filter.A, "A", "CCIR")
             End If
 
-            SNRPercentageSeries.Points.AddXY(text, testLevel + Distortion)
+            SNRPercentageSeries.Points.AddXY(text, testLevel - Noise)
 
 
             'this allows other events, such as a hard escape
@@ -1239,7 +1234,9 @@ Public Class Form1
 
     ' Records settings onto object to be saved onto a file
     Private Sub Form1_Closing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
-        KeithleyController.Close()
+        If (KeithleyController IsNot Nothing) Then
+            KeithleyController.Close()
+        End If
         Dim Data As New PersistentData
 
         Data.LevelSweep = chkLevelSweepActive.Checked
@@ -1436,6 +1433,7 @@ Public Class Form1
     End Sub
 
     'If change was from DB, sets V to proper value, and the other way around.
+    'NOTE: this converter also happens to work for converting distortion percentages
     Private Sub DBVConverter(sender As Object, e As EventArgs) Handles txtStartLevelV.TextChanged, txtStartLevelDB.TextChanged, txtSNRReferenceV.TextChanged, txtSNRReferenceDB.TextChanged, txtFreqSourceV.TextChanged, txtFreqSourceDB.TextChanged, txtLevelDistortionThreshV.TextChanged, txtLevelDistortionThreshDB.TextChanged, txtSourceMaxV.TextChanged, txtSourceMaxDB.TextChanged
         Dim textBox As TextBox = CType(sender, TextBox)
         If (Not textBox.Focused) Then Return
