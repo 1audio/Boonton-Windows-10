@@ -1,51 +1,17 @@
-﻿Imports NationalInstruments.NI4882 'must be included to reference the LangInt assembly
+﻿Imports Microsoft.VisualBasic
+Imports NationalInstruments.NI4882 'must be included to reference the LangInt assembly
 Imports System.IO
 
-Public Class KeithleyInterface
+Public MustInherit Class Keithley
+
     Private Const REFERENCEVOLTAGE As Double = 1 'Reference Voltage for converting V to and from DB
 
-
-    Private thisBoonton As Device
-
-    Public Sub New(ByVal GPIBAddress As Integer, ByVal PrimaryAddress As Integer)
-        thisBoonton = New Device(GPIBAddress, PrimaryAddress)
-    End Sub
-
-    Public Sub New(ByVal GPIBAddress As Integer, ByVal PrimaryAddress As Integer, ByVal SecondaryAddress As Integer)
-        thisBoonton = New Device(GPIBAddress, PrimaryAddress, SecondaryAddress)
-        'Boonton = li.ibdev(GPIBAddress, PrimaryAddress, SecondaryAddress, TIMEOUT, EOTMODE, EOSMODE)
-    End Sub
-
-
     'returns true if no errors
-    Public Function Write(ByVal data As String) As Boolean
-        If (Not data.Equals(String.Empty)) Then
-            Try
-                thisBoonton.Write(System.Text.Encoding.ASCII.GetBytes(data.ToCharArray()))
-                System.Threading.Thread.Sleep(100)
-            Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.OkOnly)
-                Return False
-            End Try
-        End If
-        Return True
-    End Function
-
-
+    Protected MustOverride Function Write(ByVal data As String) As Boolean
     'Returns Nothing if error
-    Public Function Read() As String
-        Dim result As String
-        Try
-            result = thisBoonton.ReadString()
-            'result = result.Replace(ControlChars.Lf, "\n").Replace(ControlChars.Cr, "\r")
-        Catch ex As Exception
+    Protected MustOverride Function Read() As String
 
-            MsgBox(ex.Message, MsgBoxStyle.OkOnly)
-            Return Nothing
-        End Try
-
-        Return result
-    End Function
+    Public MustOverride Sub Close()
 
 
 

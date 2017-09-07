@@ -27,7 +27,7 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Public Class Form1
     Inherits System.Windows.Forms.Form
     Dim CleanupFlag As Byte = 0
-    Dim KeithleyController As KeithleyInterface
+    Dim KeithleyController As Keithley
 
     'Dim buffer As String
     'Dim Dev As Short
@@ -75,6 +75,7 @@ Public Class Form1
     Friend WithEvents txtSourceMaxDB As TextBox
     Friend WithEvents Label16 As Label
     Friend WithEvents Label17 As Label
+    Friend WithEvents SwitchConnectionTypeBtn As Button
     'the string returned from instrument
     Dim ResByte As Integer
 #Region " Windows Form Designer generated code "
@@ -156,12 +157,13 @@ Public Class Form1
         Me.txtSourceMaxDB = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
+        Me.SwitchConnectionTypeBtn = New System.Windows.Forms.Button()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RunButton
         '
-        Me.RunButton.Location = New System.Drawing.Point(33, 582)
+        Me.RunButton.Location = New System.Drawing.Point(34, 641)
         Me.RunButton.Name = "RunButton"
         Me.RunButton.Size = New System.Drawing.Size(80, 30)
         Me.RunButton.TabIndex = 1
@@ -261,7 +263,7 @@ Public Class Form1
         'EndTestButton
         '
         Me.EndTestButton.Enabled = False
-        Me.EndTestButton.Location = New System.Drawing.Point(33, 627)
+        Me.EndTestButton.Location = New System.Drawing.Point(34, 686)
         Me.EndTestButton.Name = "EndTestButton"
         Me.EndTestButton.Size = New System.Drawing.Size(80, 30)
         Me.EndTestButton.TabIndex = 25
@@ -269,7 +271,7 @@ Public Class Form1
         '
         'QuitButton
         '
-        Me.QuitButton.Location = New System.Drawing.Point(159, 627)
+        Me.QuitButton.Location = New System.Drawing.Point(160, 686)
         Me.QuitButton.Name = "QuitButton"
         Me.QuitButton.Size = New System.Drawing.Size(80, 30)
         Me.QuitButton.TabIndex = 26
@@ -316,7 +318,7 @@ Public Class Form1
         Me.DisableOptionalFiltersCheckbox.AutoSize = True
         Me.DisableOptionalFiltersCheckbox.Checked = True
         Me.DisableOptionalFiltersCheckbox.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.DisableOptionalFiltersCheckbox.Location = New System.Drawing.Point(33, 541)
+        Me.DisableOptionalFiltersCheckbox.Location = New System.Drawing.Point(34, 600)
         Me.DisableOptionalFiltersCheckbox.Name = "DisableOptionalFiltersCheckbox"
         Me.DisableOptionalFiltersCheckbox.Size = New System.Drawing.Size(133, 17)
         Me.DisableOptionalFiltersCheckbox.TabIndex = 38
@@ -599,10 +601,19 @@ Public Class Form1
         Me.Label17.TabIndex = 64
         Me.Label17.Text = "Per Cent"
         '
+        'SwitchConnectionTypeBtn
+        '
+        Me.SwitchConnectionTypeBtn.Location = New System.Drawing.Point(31, 535)
+        Me.SwitchConnectionTypeBtn.Name = "SwitchConnectionTypeBtn"
+        Me.SwitchConnectionTypeBtn.Size = New System.Drawing.Size(80, 30)
+        Me.SwitchConnectionTypeBtn.TabIndex = 66
+        Me.SwitchConnectionTypeBtn.Text = "Use Serial"
+        '
         'Form1
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(1316, 669)
+        Me.ClientSize = New System.Drawing.Size(1316, 752)
+        Me.Controls.Add(Me.SwitchConnectionTypeBtn)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.txtSourceMaxDB)
@@ -697,10 +708,15 @@ Public Class Form1
         EndTestButton.Enabled = True
 
 
-        Dim BDINDEX As Integer = Val(tbGPIBAddress.Text)           'GPIB Board Address
-        Dim PRIMARY_ADDR As Integer = Val(tbRemoteAddress.Text)    'Remote Instrument Address
+        Dim Data1 As String = tbGPIBAddress.Text           'GPIB Board Address/Serial Com Port
+        Dim Data2 As String = tbRemoteAddress.Text    'Remote Instrument Address/Serial Baud Rate
 
-        KeithleyController = New KeithleyInterface(BDINDEX, PRIMARY_ADDR)
+
+        If (SwitchConnectionTypeBtn.Text.Equals("Use Serial")) Then
+            KeithleyController = New KeithleyGPIB(Data1, Data2)
+        Else
+            KeithleyController = New KeithleySerial(Data1, Data2)
+        End If
 
         If (IsNothing(KeithleyController)) Then
             Throw New System.Exception("Something went wrong, check your constructor")
@@ -743,7 +759,7 @@ Public Class Form1
     End Sub
 
 
-    Dim LastOutput
+    Dim LastOutput As Double
     Private Sub LevelSweepTest()
 
         Dim OutputDB As Double
@@ -793,7 +809,7 @@ Public Class Form1
                 Exit Do
             End If
 
-            If (Not KeithleyController.SetSource(KeithleyInterface.DBToVolts(OutputDB))) Then GPIBCleanup("Error Setting Source")
+            If (Not KeithleyController.SetSource(Keithley.DBToVolts(OutputDB))) Then GPIBCleanup("Error Setting Source")
             LastOutput = OutputDB
             System.Threading.Thread.Sleep(5000)
             'sets 'DIST' measure mode, wait one second for settling and 
@@ -831,11 +847,11 @@ Public Class Form1
     Private Sub SNRTest()
         Dim testLevel As Double = CDbl(LevelSweepSeries.Points.Item(LevelSweepSeries.Points.Count - 1).XValue)
         KeithleyController.PepareForDistortion()
-        If (Not KeithleyController.SetDistortionType(KeithleyInterface.DistortionType.SINAD)) Then GPIBCleanup("Problem setting Distortion")
+        If (Not KeithleyController.SetDistortionType(Keithley.DistortionType.SINAD)) Then GPIBCleanup("Problem setting Distortion")
 
 
         Dim Freq As Integer() = {1000, 1000, 1000}
-        Dim FSet As KeithleyInterface.Filter() = {KeithleyInterface.Filter.NONE, KeithleyInterface.Filter.A, KeithleyInterface.Filter.CCIR}
+        Dim FSet As Keithley.Filter() = {Keithley.Filter.NONE, Keithley.Filter.A, Keithley.Filter.CCIR}
 
         SNRPercentageSeries.Points.Clear()
         Chart1.ChartAreas.Add(SNRPercentageArea)
@@ -852,15 +868,15 @@ Public Class Form1
                 GPIBCleanup("Error setting frequency or source")
             End If
 
-            KeithleyController.SetSource(KeithleyInterface.DBToVolts(LastOutput))
+            KeithleyController.SetSource(Keithley.DBToVolts(LastOutput))
 
             System.Threading.Thread.Sleep(2000)
 
             Dim Distortion As Double = KeithleyController.MeasureTHDN()
 
             Dim text As String = CStr(Freq(i))
-            If (FSet(i) <> KeithleyInterface.Filter.NONE) Then
-                text = text & If(FSet(i) = KeithleyInterface.Filter.A, "A", "CCIR")
+            If (FSet(i) <> Keithley.Filter.NONE) Then
+                text = text & If(FSet(i) = Keithley.Filter.A, "A", "CCIR")
             End If
 
             SNRPercentageSeries.Points.AddXY(text, testLevel + Distortion)
@@ -1123,9 +1139,9 @@ Public Class Form1
             txtStartLevelDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SweepStartLevel))
             txtLevelOhmLoad.Text = Data.SweepOhmLoad
             txtLevelDistortionThreshDB.Text = Data.DistortionThresh
-            txtLevelDistortionThreshV.Text = KeithleyInterface.DBToVolts(CDbl(Data.DistortionThresh))
+            txtLevelDistortionThreshV.Text = Keithley.DBToVolts(CDbl(Data.DistortionThresh))
             txtSourceMaxV.Text = Data.SourceMax
-            txtSourceMaxDB.Text = KeithleyInterface.VoltsToDB(CDbl(Data.SourceMax))
+            txtSourceMaxDB.Text = Keithley.VoltsToDB(CDbl(Data.SourceMax))
 
             chkSNRActive.Checked = Data.SNR
             txtSNRReferenceV.Text = Data.SNRRef
@@ -1223,6 +1239,7 @@ Public Class Form1
 
     ' Records settings onto object to be saved onto a file
     Private Sub Form1_Closing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
+        KeithleyController.Close()
         Dim Data As New PersistentData
 
         Data.LevelSweep = chkLevelSweepActive.Checked
@@ -1448,6 +1465,18 @@ Public Class Form1
                 Return
             End If
             vText.Text = BoontonInterface.DBToVolts(CDbl(dbVal))
+        End If
+    End Sub
+
+    Private Sub SwitchConnectionTypeBtn_Click(sender As Object, e As EventArgs) Handles SwitchConnectionTypeBtn.Click
+        If (SwitchConnectionTypeBtn.Text.Equals("Use Serial")) Then
+            SwitchConnectionTypeBtn.Text = "Use GPIB"
+            Label12.Text = "Com Port"
+            Label13.Text = "Baud Rate"
+        Else
+            Label12.Text = "GPIB Address"
+            Label13.Text = "Remote Address"
+            SwitchConnectionTypeBtn.Text = "Use Serial"
         End If
     End Sub
 End Class

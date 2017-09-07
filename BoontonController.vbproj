@@ -136,7 +136,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BoontonInterface.vb" />
-    <Compile Include="KeithlyInterface.vb" />
+    <Compile Include="Keithley.vb" />
+    <Compile Include="KeithleyGPIB.vb" />
+    <Compile Include="KeithleySerial.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
