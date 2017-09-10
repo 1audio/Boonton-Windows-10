@@ -1131,7 +1131,7 @@ Public Class Form1
 
             chkLevelSweepActive.Checked = Data.LevelSweep
             txtStartLevelV.Text = Data.SweepStartLevel
-            txtStartLevelDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SweepStartLevel))
+            txtStartLevelDB.Text = KeithleyInterface.VoltsToDB(CDbl(Data.SweepStartLevel))
             txtLevelOhmLoad.Text = Data.SweepOhmLoad
             txtLevelDistortionThreshDB.Text = Data.DistortionThresh
             txtLevelDistortionThreshV.Text = Keithley.DBToVolts(CDbl(Data.DistortionThresh))
@@ -1140,17 +1140,21 @@ Public Class Form1
 
             chkSNRActive.Checked = Data.SNR
             txtSNRReferenceV.Text = Data.SNRRef
-            txtSNRReferenceDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.SNRRef))
+            txtSNRReferenceDB.Text = KeithleyInterface.VoltsToDB(CDbl(Data.SNRRef))
 
             chkFreqDistActive.Checked = Data.FreqAndDist
             txtFreqSourceV.Text = Data.FreqSource
-            txtFreqSourceDB.Text = BoontonInterface.VoltsToDB(CDbl(Data.FreqSource))
+            txtFreqSourceDB.Text = KeithleyInterface.VoltsToDB(CDbl(Data.FreqSource))
             chkInverseRIAA.Checked = Data.InverseRIAA
             chk318uS.Checked = Data.use318uS
 
             txtDescription.Text = Data.Description
             tbGPIBAddress.Text = Data.GPIBAddress
             tbRemoteAddress.Text = Data.RemoteAddress
+
+            If (Data.SwitchBtnText.Equals("Use GPIB")) Then
+                SwitchConnectionTypeBtn_Click(Nothing, Nothing)
+            End If
         End If
 
         ' Set up chart areas and Series
@@ -1256,6 +1260,7 @@ Public Class Form1
         Data.Description = txtDescription.Text
         Data.GPIBAddress = tbGPIBAddress.Text
         Data.RemoteAddress = tbRemoteAddress.Text
+        Data.SwitchBtnText = SwitchConnectionTypeBtn.Text
 
 
         Dim SettingsFile As Stream = File.Create("settings.bin")
@@ -1423,6 +1428,8 @@ Public Class Form1
         Public Description As String
         Public GPIBAddress As String
         Public RemoteAddress As String
+
+        Public SwitchBtnText As String
     End Class
 
     Private Sub txtDescription_TextChanged(sender As System.Object, e As System.EventArgs) Handles txtDescription.TextChanged
@@ -1450,7 +1457,7 @@ Public Class Form1
                 dbText.Text = "NaN"
                 Return
             End If
-            dbText.Text = BoontonInterface.VoltsToDB(vVal)
+            dbText.Text = KeithleyInterface.VoltsToDB(vVal)
 
         Else
             Dim vName As String = name.Substring(0, name.Length - 2) & "V"
@@ -1462,7 +1469,7 @@ Public Class Form1
                 vText.Text = "NaN"
                 Return
             End If
-            vText.Text = BoontonInterface.DBToVolts(CDbl(dbVal))
+            vText.Text = KeithleyInterface.DBToVolts(CDbl(dbVal))
         End If
     End Sub
 

@@ -12,9 +12,9 @@ Imports System.Windows.Forms.DataVisualization.Charting
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyTitle("Keithley 2015 Control Software")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("PDS")>
 <Assembly: AssemblyProduct("")> 
 <Assembly: AssemblyCopyright("")> 
 <Assembly: AssemblyTrademark("")> 

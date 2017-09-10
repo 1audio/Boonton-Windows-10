@@ -37,7 +37,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <PublishUrl>C:\Users\demia\Desktop\Boonton Programs\Publish\Keithly App\</PublishUrl>
+    <PublishUrl>C:\Users\demia\Desktop\Boonton Programs\Publish\Keithley App\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -47,7 +47,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -132,10 +132,10 @@
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Boonton Form 2.vb">
+    <Compile Include="Keithley Form 2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BoontonInterface.vb" />
+    <Compile Include="KeithleyInterface.vb" />
     <Compile Include="Keithley.vb" />
     <Compile Include="KeithleyGPIB.vb" />
     <Compile Include="KeithleySerial.vb" />
@@ -148,8 +148,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Boonton Form 2.resx">
-      <DependentUpon>Boonton Form 2.vb</DependentUpon>
+    <EmbeddedResource Include="Keithley Form 2.resx">
+      <DependentUpon>Keithley Form 2.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -1,11 +1,16 @@
 ﻿Imports NationalInstruments.NI4882 'must be included to reference the LangInt assembly
 Imports System.IO
+Imports System.Text
+Imports System.IO.Ports
 
 Public Class KeithleySerial
     Inherits Keithley
 
 
     Private ComPort As IO.Ports.SerialPort = Nothing
+
+
+
     Public Sub New(ByVal COMName As String, ByVal Baud As Integer)
         Try
             ComPort = My.Computer.Ports.OpenSerialPort("COM1")

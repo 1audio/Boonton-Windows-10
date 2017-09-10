@@ -1,6 +1,6 @@
 ﻿Imports NationalInstruments.NI4882 'must be included to reference the LangInt assembly
 Imports System.IO
-Public Class BoontonInterface
+Public Class KeithleyInterface
 
     'Private Shared TIMEOUT As Integer = c.T10s            'TIMEOUT assigned a value during initialization
 
